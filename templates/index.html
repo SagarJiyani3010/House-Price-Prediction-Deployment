@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<title>House Price Prediction</title>
+<meta name="description" content="Thoughts, reviews and ideas since 1999."/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link rel="shortcut icon" href="#">
+<link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='screen.css') }}"/>
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:400,300italic,300,400italic,700,700italic|Playfair+Display:400,700,400italic,700italic"/>
+
+<style type="text/css">
+	.form-style-5{
+		max-width: auto;
+		padding: 10px 20px;
+		background: #f4f7f8;
+		margin: 10px auto;
+		padding: 20px;
+		background: #f4f7f8;
+		border-radius: 8px;
+		font-family: Georgia, "Times New Roman", Times, serif;
+	}
+	.form-style-5 fieldset{
+		border: none;
+	}
+	.form-style-5 legend {
+		font-size: 1.4em;
+		margin-bottom: 10px;
+	}
+	.form-style-5 label {
+		display: block;
+		margin-bottom: 8px;
+	}
+	.form-style-5 input[type="text"],
+	.form-style-5 select {
+		font-family: Georgia, "Times New Roman", Times, serif;
+		background: rgba(255,255,255,.1);
+		border: none;
+		border-radius: 4px;
+		font-size: 15px;
+		margin: 0;
+		outline: 0;
+		padding: 10px;
+		width: 33.06%;
+		box-sizing: border-box; 
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box; 
+		background-color: #e8eeef;
+		color:#8a97a0;
+		-webkit-box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
+		box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
+		margin-bottom: 30px;
+	}
+	.form-style-5 input[type="text"]:focus,
+	.form-style-5 select:focus{
+		background: #d2d9dd;
+	}
+	.form-style-5 select{
+		-webkit-appearance: menulist-button;
+		height:38px;
+	}
+	.form-style-5 .number {
+		background: #1abc9c;
+		color: #fff;
+		height: 30px;
+		width: 30px;
+		display: inline-block;
+		font-size: 0.8em;
+		margin-right: 4px;
+		line-height: 30px;
+		text-align: center;
+		text-shadow: 0 1px 0 rgba(255,255,255,0.2);
+		border-radius: 15px 15px 15px 0px;
+	}
+	
+	.form-style-5 input[type="submit"],
+	.form-style-5 input[type="button"]
+	{
+		position: relative;
+		display: block;
+		padding: 10px 0px 10px 0px;
+		color: #FFF;
+		margin: 0 auto;
+		background: #1abc9c;
+		font-size: 18px;
+		text-align: center;
+		font-style: normal;
+		width: 30%;
+		height: 50px;
+		border: 1px solid #16a085;
+		border-width: 1px 1px 3px;
+		margin-bottom: 10px;
+	}
+	.form-style-5 input[type="submit"]:hover,
+	.form-style-5 input[type="button"]:hover
+	{
+		background: #109177;
+	}
+	</style>
+
+</head>
+<body class="home-template">
+<div>
+	<header class="main-header" style="background-image: url({{ url_for('static', filename='intro.png') }})">
+	<div class="vertical">
+		<div class="main-header-content inner">
+			<h1 class="page-title">House Price Prediction</h1>
+			<div class="entry-title-divider">
+				<span></span><span></span><span></span>
+			</div>
+			<h2 class="page-description">ESTIMATE YOUR HOUSE PRICE FOR SALE</h2>
+		</div>
+	</div>
+	<a class="scroll-down icon-arrow-left" href="#content" data-offset="-45"><span class="hidden">Scroll Down</span></a>
+	</header>
+	<main id="content" class="content" role="main">
+	<div class="wraps">
+		<!-- <img src="{{ url_for('static', filename='shadow.png') }}" class="wrapshadow"> -->
+		<div class="grid layoutbackground">
+			<div class="grid-item">
+				<div class="form-style-5">
+					<form action="{{ url_for('predict')}}" method="post">
+							<div class="row">
+								<div class="col-md-4"><label for="job">Zone Type :</label></div>
+								<div class="col-md-4"><label for="job">Area in Square Feet :</label></div>
+								<div class="col-md-4"><label for="job">Utilities :</label></div>
+							</div>
+
+						<!-- <label for="job">Interests:</label> -->
+							<select name="MSZoning">
+								<!-- <optgroup label="MSZoning"> -->
+									<option value="A">Agriculture</option>
+                                    <option value="C">Commercial</option>
+                                    <option value="FV">Floating Village Residential</option>
+                                    <option value="I">Industrial</option>
+                                    <option value="RH">Residential High Density</option>
+                                    <option value="RL">Residential Low Density</option>
+                                    <option value="RP">Residential Low Density Park </option>
+                                    <option value="RM">Residential Medium Density</option>
+								<!-- </optgroup> -->
+							</select>  
+							
+							<input type="text" name="LotArea" placeholder="Lot Area" required />
+
+							<select name="Utilities" id="job">
+								<optgroup label="Utilities">
+									<option value="AllPub">All public Utilities</option>
+                                    <option value="NoSewr">Electricity, Gas, and Water</option>
+                                    <option value="NoSeWa">Electricity and Gas Only</option>
+                                    <option value="ELO">Electricity only</option>
+								</optgroup>
+              </select> 
+						
+							<div class="row">
+								<div class="col-md-4"><label for="job">House Style :</label></div>
+								<div class="col-md-4"><label for="job">Overall Material Quality :</label></div>
+								<div class="col-md-4"><label for="job">Overall  House Condition :</label></div>
+							</div>
+						
+						<!-- <label for="job">Interests:</label> -->
+							<select name="HouseStyle">
+								<optgroup label="House Style">
+									<option value="1Story">One story</option>
+                                    <option value="1.5Fin	One and one-half story">2nd level finished</option>
+                                    <option value="1.5Unf	One and one-half story">2nd level unfinished</option>
+                                    <option value="2Story	Two story">Two story</option>
+                                    <option value="2.5Fin	Two and one-half story">2nd level finished</option>
+                                    <option value="2.5Unf	Two and one-half story">2nd level unfinished</option>
+                        	        <option value="SFoyer">Split Foyer</option>
+                                    <option value="SLvl">Split Level</option>
+								</optgroup>
+							</select> 
+							
+							<select name="OverallQal">
+								<optgroup label="Overall Material Quality">
+									<option value="10">Very Excellent</option>
+                                    <option value="9">Excellent</option>
+                                    <option value="8">Very Good</option>
+                                    <option value="7">Good</option>
+                                    <option value="6">Above Average</option>
+                                    <option value="5">Average</option>
+                                    <option value="4">Below Average</option>
+                                    <option value="3">Fair</option>
+                                    <option value="2">Poor </option>
+                                    <option value="1">Very Poor</option>
+								</optgroup>
+							</select>  
+							
+							<select name="OverallCond">
+								<optgroup label="Overall House Condition">
+									<option value="10">Very Excellent</option>
+                                    <option value="9">Excellent</option>
+                                    <option value="8">Very Good</option>
+                                    <option value="7">Good</option>
+                                    <option value="6">Above Average</option>
+                                    <option value="5">Average</option>
+                                    <option value="4">Below Average</option>
+                                    <option value="3">Fair</option>
+                                    <option value="2">Poor </option>
+                                    <option value="1">Very Poor</option>
+								</optgroup>
+							</select> 
+
+					
+							<div class="row">
+								<div class="col-md-4"><label for="job">Year Built :</label></div>
+								<div class="col-md-4"><label for="job">Type of Roof :</label></div>
+								<div class="col-md-4"><label for="job">Basement Quality :</label></div>
+							</div>
+
+							<input type="text" name="YearBuilt" placeholder="Year Built" required>
+
+						<!-- <label for="job">Interests:</label> -->
+							<select id="job" name="RoofStyle">
+								<optgroup label="Roof Style">
+									<option value="Flat">Flat</option>
+                                    <option value="Gable">Gable</option>
+                                    <option value="Gambrel">Gambrel</option>
+                                    <option value="Hip">Hip</option>
+                                    <option value="Mansard">Mansard</option>
+                                    <option value="Shed">Shed</option>
+								</optgroup>
+							</select>  
+							
+							<select id="job" name="BsmtQal">
+								<optgroup label="Basement Quality">
+									<option value="Ex">Excellent</option>
+                                    <option value="Gd">Good</option>
+                                    <option value="TA">Typical</option>
+                                    <option value="Fa">Fair</option>
+                                    <option value="Po">Poor</option>
+                                    <option value="NA">No Basement</option>
+								</optgroup>
+							</select> 
+ 
+							<div class="row">
+								<div class="col-md-4"><label for="job">Basement Condition :</label></div>
+								<div class="col-md-4"><label for="job">Central AC :</label></div>
+								<div class="col-md-4"><label for="job">Kitchen Quality :</label></div>
+							</div>
+
+						<!-- <label for="job">Interests:</label> -->
+
+							<select id="job" name="BsmtCond">
+								<optgroup label="Bsmt Condition">
+									<option value="Ex">Excellent</option>
+									<option value="Gd">Good</option>
+									<option value="TA">Typical</option>
+									<option value="Fa">Fair</option>
+									<option value="Po">Poor</option>
+									<option value="NA">No Basement</option>
+								</optgroup>
+							</select>
+							
+							<select id="job" name="CentralAC">
+								<optgroup label="Central AC">
+									<option value="N">No</option>
+                                    <option value="Y">Yes</option>
+								</optgroup>
+							</select>  
+							
+							<select id="job" name="KitchenQal">
+								<optgroup label="Kitchen Quality">
+									<option value="Ex">Excellent</option>
+                                    <option value="Gd">Good</option>
+                        	        <option value="TA">Typical</option>
+                                    <option value="Fa">Fair</option>
+                                    <option value="Po">Poor</option>
+								</optgroup>
+							</select> 
+
+							<div class="row">
+								<div class="col-md-4"><label for="job">Garage Type :</label></div>
+								<div class="col-md-4"><label for="job">Garage Area :</label></div>
+								<div class="col-md-4"><label for="job">Garage Quality:</label></div>
+							</div>
+
+							<select id="job" name="GarageType">
+								<optgroup label="Garage Type">
+									<option value="2Types">More than one type of garage</option>
+									<option value="Attchd">Attached to home</option>
+									<option value="Basment">Basement Garage</option>
+									<option value="BuiltIn">Built-In</option>
+									<option value="CarPort">Car Port</option>
+									<option value="Detchd">Detached from home</option>
+									<option value="NA">No Garage</option>
+								</optgroup>
+							</select>
+
+							<input type="text" name="GarageArea" placeholder="Garage Area" required>
+						
+						<!-- <label for="job">Interests:</label> -->
+							<select id="GarageQal" name="GarageQual">
+								<optgroup label="Garage Quality">
+									<option value="Ex">Excellent</option>
+									<option value="Gd">Good</option>
+									<option value="TA">Typical/Average</option>
+									<option value="Fa">Fair</option>
+									<option value="Po">Poor</option>
+									<option value="NA">No Garage</option>
+								</optgroup>
+							</select>  
+					
+							<div class="row">
+								<div class="col-md-4"><label for="job">Garage Condition:</label></div>
+							</div>
+							<div class="row">
+								<select id="GarageCon" name="GarageCond">
+									<optgroup label="Garage Condition">
+										<option value="Ex">Excellent</option>
+										<option value="Gd">Good</option>
+										<option value="TA">Typical/Average</option>
+										<option value="Fa">Fair</option>
+										<option value="Po">Poor</option>
+										<option value="NA">No Garage</option>
+									</optgroup>
+								</select>
+
+								<input type="submit" id="predict" value="Predict" />
+							</div>
+					</form>
+					
+					<br>
+					<div>
+						<div>
+							<input id="result" type="submit" style="background-color:lightblue; color: #16a085;" name="dollar" value="{{ prediction_text }}" />
+						</div>
+						<div>
+							<input  id="result1" type="submit" style="background-color: lightblue; color: #16a085;" name="rupee" value="{{ inr }}" />
+						</div>
+					</div>			
+				</div>
+			</div>
+		</div>
+	</div>
+	</main>
+	<footer class="site-footer clearfix">
+	<a href="#top" id="back-to-top" class="back-top"></a>
+	<div class="text-center">
+		<!-- <a href="index.html">House Price Prediction</a> &copy; 2020<br/> -->
+		Designed by <a href="sagarjiyani.wordpress.com">Sagar Jiyani</a>
+	</div>
+	</footer>
+</div>
+<script type="text/javascript" src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='masonry.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='fitvids.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='index.js') }}"></script>
+</body>
+</html>
