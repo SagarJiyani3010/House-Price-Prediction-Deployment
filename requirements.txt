@@ -1,4 +1,7 @@
-pandas==1.0.1
-numpy==1.18.1
-pickleshare==0.7.5
-pycaret==2.1.2
+pickleshare
+pycaret
+numpy
+pandas
+sklearn
+flask
+pickle5
