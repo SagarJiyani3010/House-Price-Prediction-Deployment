@@ -1,7 +1,5 @@
-pickleshare
 pycaret
 numpy
 pandas
 sklearn
 flask
-pickle5
